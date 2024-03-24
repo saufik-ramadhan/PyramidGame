@@ -1,6 +1,19 @@
 {
   "appName": {
-    "full": "React Native PyramidGame",
-    "initials": "RNB"
+    "full": "Pyramid Game",
+    "initials": "PYG"
+  },
+  "rules": {
+    "title": "$t(common:appName.full) Rules",
+    "1": "The game is held once a month",
+    "2": "There are 5 levels based on the vote A, B, C, D, F",
+    "3": "Student who gets the zero number of votes gets an \"F\"",
+    "4": "F must do whatever level A,B,C,D tell him/her to do",
+    "5": "B,C,D can order level below them to do only when A approves",
+    "6": "Whoever leak this information outside the players, gets penalty",
+    "aggreement": "I, hereby agree to participate in the Pyramid game under the preceding rules."
+  },
+  "registration": {
+    "title": "Registration"
   }
 }

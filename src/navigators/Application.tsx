@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { Example, Startup, Rules, Registration } from "@/screens";
+import { Example, Startup, Rules, Registration, Dashboard } from "@/screens";
 import { useTheme } from "@/theme";
 
 import type { ApplicationStackParamList } from "@/types/navigation";
@@ -18,6 +18,8 @@ function ApplicationNavigator() {
         <Stack.Screen name="Example" component={Example} />
         <Stack.Screen name="Rules" component={Rules} />
         <Stack.Screen name="Registration" component={Registration} />
+        {/** User Screen */}
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

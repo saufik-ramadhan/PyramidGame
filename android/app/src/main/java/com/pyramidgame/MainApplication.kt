@@ -1,4 +1,4 @@
-package com.pyramidgame
+package com.jianyang.pyramidgame
 
 import android.app.Application
 import com.facebook.react.PackageList

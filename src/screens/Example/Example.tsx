@@ -17,7 +17,7 @@ import { ImageVariant } from "@/components/atoms";
 import { Brand } from "@/components/molecules";
 import { SafeScreen } from "@/components/template";
 import { useTheme } from "@/theme";
-import { fetchOne } from "@/services/users";
+import { fetchOne, userAuth } from "@/services/users";
 
 import { isImageSourcePropType } from "@/types/guards/image";
 
@@ -30,6 +30,8 @@ import { ApplicationScreenProps } from "@/types/navigation";
 
 function Example({ navigation }: ApplicationScreenProps) {
   const { t } = useTranslation(["example", "welcome"]);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const {
     colors,
@@ -49,12 +51,28 @@ function Example({ navigation }: ApplicationScreenProps) {
     queryFn: () => {
       return fetchOne(currentId);
     },
-    enabled: currentId >= 0,
   });
 
   useEffect(() => {
     if (isSuccess) {
-      Alert.alert(t("example:welcome", data.name));
+      // Alert.alert(t("example:welcome", data?.fullname));
+      Alert.alert(
+        `Logged In`,
+        `User ${data?.fullname} is logged in!`,
+        [
+          {
+            text: "OK",
+            onPress: () =>
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "Dashboard" }],
+              }),
+          },
+        ],
+        {
+          cancelable: false,
+        }
+      );
     }
   }, [isSuccess, data]);
 
@@ -74,6 +92,18 @@ function Example({ navigation }: ApplicationScreenProps) {
     throw new Error("Image source is not valid");
   }
 
+  const handleLogin = async () => {
+    try {
+      const isAuthenticated = await userAuth({ username, password });
+      if (isAuthenticated) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Dashboard" }],
+        });
+      }
+    } catch (error) {}
+  };
+
   return (
     <SafeScreen>
       <ScrollView>
@@ -84,10 +114,6 @@ function Example({ navigation }: ApplicationScreenProps) {
             gutters.marginTop_24,
           ]}
         >
-          {/* <View
-            style={[layout.relative, backgrounds.gray100, components.circle250]}
-          /> */}
-
           <View style={[layout.relative]}>
             <Brand height={200} width={200} />
           </View>
@@ -110,12 +136,18 @@ function Example({ navigation }: ApplicationScreenProps) {
               ]}
             >
               {t("welcome:login")}
+              {username}:{password}
             </Text>
-            <TextInput placeholder="username" style={[components.loginInput]} />
+            <TextInput
+              placeholder="username"
+              style={[components.loginInput]}
+              onChange={(e) => setUsername(e.nativeEvent.text)}
+            />
             <TextInput
               placeholder="password"
               secureTextEntry
               style={[components.loginInput, gutters.marginTop_12]}
+              onChange={(e) => setPassword(e.nativeEvent.text)}
             />
 
             <View
@@ -132,7 +164,7 @@ function Example({ navigation }: ApplicationScreenProps) {
             >
               <TouchableOpacity
                 testID="login-button"
-                onPress={() => console.log("Login Clicked!")}
+                onPress={() => handleLogin()}
                 style={[
                   {
                     flex: 3,

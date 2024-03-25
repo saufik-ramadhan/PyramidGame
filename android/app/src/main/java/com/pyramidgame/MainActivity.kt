@@ -1,4 +1,4 @@
-package com.pyramidgame
+package com.jianyang.pyramidgame
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
